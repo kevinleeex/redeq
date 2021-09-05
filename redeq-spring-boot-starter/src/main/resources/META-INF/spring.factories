@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lidengju.redeq.config.RedeqAutoConfig,com.lidengju.redeq.config.ConfigProperties,com.lidengju.redeq.config.RedeqRedissonConfig
