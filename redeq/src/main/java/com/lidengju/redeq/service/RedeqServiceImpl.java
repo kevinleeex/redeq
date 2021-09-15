@@ -35,7 +35,7 @@ public class RedeqServiceImpl implements RedeqService {
     /**
      * Add a Job to BucketQueue and JobPool
      *
-     * @param job the delayed Job to add
+     * @param job   the delayed Job to add
      * @param cover if allow cover the Job by topicId
      */
     @Override
@@ -52,26 +52,25 @@ public class RedeqServiceImpl implements RedeqService {
                 throw new RedeqException(ErrorCodeEnum.ACQUIRE_LOCK_FAIL);
             }
             // check job validation, fill delay, retry and next execution time props
-            if (job.getDelay() == null || job.getDelay() < 0) {
+            if (job.getDelay() < 0) {
                 job.setDelay(redeqConfig.getDelay());
             }
-            if (job.getRetry() == null || job.getRetry() < 0) {
+            if (job.getRetry() < 0) {
                 job.setRetry(redeqConfig.getRetry());
             }
-            if (job.getNextExecTimestamp() == null || job.getNextExecTimestamp() < 0) {
+            if (job.getNextExecTimestamp() < 0) {
                 job.setNextExecTimestamp(job.getCreateTimestamp() + job.getDelay() * 1000);
             }
-
-            // create route id
-            job.setRouteId( redeqConfig.getConcurrency());
-
+            if (job.getRouteId() < 0) {
+                job.setRouteId(redeqConfig.getConcurrency());
+            }
             // create batch execution
             String topicId = job.getTopicId();
             RMap<String, DelayedJob> jobPool = redissonClient.getMap(redeqConfig.getPrefix() + RedeqConstants.JOB_POOL_KEY_PRE);
             if (jobPool.size() >= redeqConfig.getMaxPool()) {
                 throw new RedeqException(ErrorCodeEnum.JOB_POOL_EXCEEDED);
             }
-            if (!cover && jobPool.containsKey(job.getTopicId())){
+            if (!cover && jobPool.containsKey(job.getTopicId())) {
                 throw new RedeqException(ErrorCodeEnum.JOB_ALREADY_EXIST);
             }
             /* ---------- 1. Add job to Job Pool ---------- */
@@ -95,7 +94,7 @@ public class RedeqServiceImpl implements RedeqService {
         return 0;
     }
 
-    public int addJob(DelayedJob job){
+    public int addJob(DelayedJob job) {
         return addJob(job, true);
     }
 

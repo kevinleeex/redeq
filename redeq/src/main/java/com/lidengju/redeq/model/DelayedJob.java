@@ -26,10 +26,6 @@ public class DelayedJob implements Serializable {
      */
     private String jobId;
     /**
-     * route id, calculated by hashCode(srcId) % concurrency
-     */
-    private int routeId = 0;
-    /**
      * message for logging
      */
     private String msg;
@@ -53,6 +49,10 @@ public class DelayedJob implements Serializable {
      * the timestamp for next execution.
      */
     private long nextExecTimestamp = -1;
+    /**
+     * route id, calculated by hashCode(srcId) % concurrency
+     */
+    private int routeId = -1;
     /**
      * the timestamp for creation.
      */
@@ -113,43 +113,43 @@ public class DelayedJob implements Serializable {
         this.body = body;
     }
 
-    public Integer getRetry() {
+    public int getRetry() {
         return retry;
     }
 
-    public void setRetry(Integer retry) {
+    public void setRetry(int retry) {
         this.retry = retry;
     }
 
-    public Long getDelay() {
+    public long getDelay() {
         return delay;
     }
 
-    public void setDelay(Long delay) {
+    public void setDelay(long delay) {
         this.delay = delay;
     }
 
-    public Long getCreateTimestamp() {
+    public long getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(Long createTimestamp) {
+    public void setCreateTimestamp(long createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
-    public Long getUpdateTimestamp() {
+    public long getUpdateTimestamp() {
         return updateTimestamp;
     }
 
-    public void setUpdateTimestamp(Long updateTimestamp) {
+    public void setUpdateTimestamp(long updateTimestamp) {
         this.updateTimestamp = updateTimestamp;
     }
 
-    public Long getNextExecTimestamp() {
+    public long getNextExecTimestamp() {
         return nextExecTimestamp;
     }
 
-    public void setNextExecTimestamp(Long nextExecTimestamp) {
+    public void setNextExecTimestamp(long nextExecTimestamp) {
         this.nextExecTimestamp = nextExecTimestamp;
     }
 
