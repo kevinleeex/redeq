@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  */
 @Configuration
 public class RedeqAutoConfig {

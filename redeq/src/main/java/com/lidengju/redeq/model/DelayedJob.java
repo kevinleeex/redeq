@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  **/
 public class DelayedJob implements Serializable {
 
@@ -175,7 +175,7 @@ public class DelayedJob implements Serializable {
      * @param modBy modBy by this number
      */
     public void setRouteId(int modBy) {
-        this.routeId = (srcId.hashCode() & Integer.MAX_VALUE) & (modBy-1);
+        this.routeId = (srcId.hashCode() & Integer.MAX_VALUE) & (modBy - 1);
     }
 
     /**

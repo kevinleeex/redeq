@@ -5,7 +5,7 @@ import com.lidengju.redeq.model.DelayedJob;
 /**
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/5
+ * Created on 2021/9/5
  */
 public abstract class BaseTest {
     public static DelayedJob getJob() {

@@ -5,7 +5,9 @@ import com.lidengju.redeq.config.RedeqConfig;
 import com.lidengju.redeq.model.DelayedJob;
 import com.lidengju.redeq.service.AbstractConsumeService;
 import com.lidengju.redeq.service.RedeqServiceImpl;
-import mockit.*;
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.Verifications;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/5
+ * Created on 2021/9/5
  */
 class RedeqTest extends BaseTest {
 
@@ -130,7 +132,7 @@ class RedeqTest extends BaseTest {
             }
         });
         Assertions.assertEquals(1, Redeq.getTopicCnt().intValue());
-        new Verifications(){
+        new Verifications() {
             {
                 executorService.execute((Runnable) any);
                 times = 1;
@@ -144,7 +146,7 @@ class RedeqTest extends BaseTest {
             }
         });
         Assertions.assertEquals(2, Redeq.getTopicCnt().intValue());
-        new Verifications(){
+        new Verifications() {
             {
                 executorService.execute((Runnable) any);
                 times = 1;

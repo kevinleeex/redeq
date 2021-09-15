@@ -3,7 +3,7 @@ package com.lidengju.redeq.config;
 /**
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  */
 public class RedeqConfig {
     /**
@@ -153,6 +153,6 @@ public class RedeqConfig {
     public void setConcurrency(int concurrency) {
         // get the closest power of 2 according given number
         concurrency = Math.max(1, concurrency);
-        this.concurrency = (int) Math.pow(2, Math.floor(Math.log(concurrency)/Math.log(2)));
+        this.concurrency = (int) Math.pow(2, Math.floor(Math.log(concurrency) / Math.log(2)));
     }
 }

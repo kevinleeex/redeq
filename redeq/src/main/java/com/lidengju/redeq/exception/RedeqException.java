@@ -8,7 +8,7 @@ import com.lidengju.redeq.constant.ErrorCodeEnum;
  *
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  **/
 public class RedeqException extends Exception {
     private final ErrorCodeEnum errorCode;
@@ -23,6 +23,8 @@ public class RedeqException extends Exception {
 
     /**
      * Constructs a new RedeqException with specified ErrorCodeEnum.
+     *
+     * @param errorCode ErrorCodeEnum
      */
     public RedeqException(ErrorCodeEnum errorCode) {
         super(String.format("ErrorCode: [%s], ErrorMsg: [%s]", errorCode.getCode(), errorCode.getMsg()));

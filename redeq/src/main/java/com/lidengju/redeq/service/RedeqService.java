@@ -10,14 +10,15 @@ import java.util.List;
  *
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  **/
 public interface RedeqService {
     /**
      * Add a task to BucketQueue and JobPool
      *
-     * @param job Job for adding
+     * @param job   Job for adding
      * @param cover allow cover the Job by topicJobId
+     * @return if add succeed, 1 - succeed, 0 - failed
      */
     int addJob(DelayedJob job, boolean cover);
 
@@ -25,6 +26,7 @@ public interface RedeqService {
      * Add a task to BucketQueue and JobPool, with cover not allowed
      *
      * @param job Job for adding
+     * @return if add succeed, 1 - succeed, 0 - failed
      */
     int addJob(DelayedJob job);
 
@@ -32,6 +34,7 @@ public interface RedeqService {
      * Remove a task from BucketQueue and JobPool
      *
      * @param job Job for removing
+     * @return if remove succeed, 1 - succeed, 0 - failed
      */
     int removeJob(DelayedJob job);
 

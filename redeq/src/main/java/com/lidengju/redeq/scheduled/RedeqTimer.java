@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  **/
 public class RedeqTimer {
 

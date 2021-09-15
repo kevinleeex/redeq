@@ -5,7 +5,7 @@ package com.lidengju.redeq.constant;
  *
  * @author Li, Dengju(hello@lidengju.com)
  * @version 1.0
- * @date 2021/9/4
+ * Created on 2021/9/4
  **/
 public enum ErrorCodeEnum {
     /**
