@@ -1,4 +1,14 @@
-# ReDeQ - Redis Delayed Queue
+<div align="center"><img style="display:inline-block" width='800' src="./assets/redeq-logo.png"/><p>
+    <span style="font-size: 14px">Version: 1.1.0-ALPHA</span><br>
+    <span>"ReDeQ - 另一个基于Redis的延迟队列"</span><br>
+    <span style="font-size: 12px;color= #95dafc">-- Created by <a>Kevin T. Lee</a> --</span>
+    </p>
+   <a href="./License"><img alt="MIT" src="https://img.shields.io/badge/LICENSE%20-MIT-green.svg?longCache=true&style=for-the-badge"></a>
+        <!--<a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Love-red.svg?longCache=true&style=for-the-badge"></a>-->
+    <a href="https://github.com/kevinleeex/redeq"><img alt="Version" src="https://img.shields.io/badge/Version-1.1.0_ALPHA-blue.svg?longCache=true&style=for-the-badge"></a>
+</div>
+
+# ReDeQ - Yet Another Redis Delayed Queue
 
 另一个基于Redis的延迟队列
 
