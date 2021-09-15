@@ -1,8 +1,19 @@
 redeq:
+  # 配置redis连接信息，配置后会注入RedissonClient，默认集群模式
   redis:
-    hosts: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005
-    password: ""
+    hosts: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005,127.0.0.1:7006 # redis hosts, 逗号分隔, 用于配置redisson
+    password: p@33word # redis password
+  # 下面非必须配置
   app:
-    verbose: true
-    max-topics: 3
-    concurrency: 3
+    prefix: "" # 应用前缀，用于redis键前缀
+    verbose: false # 是否打印冗余日志
+    delay: 60 # 默认任务延迟时间，单位秒，默认60秒
+    retry: 3 # 默认重试次数，默认3次
+    schedule: 5 # 扫描延迟队列时间，默认5秒，减少提高实时性
+    poll-queue-timeout: 5 # 默认从桶队列迁移作业到就绪队列的等待时间，默认5秒
+    max-pool: 500000 # 作业池的最大容量，超过将抛出JOB_POOL_EXCEEDED异常，默认50万
+    max-topics: 10 # 最多允许消费的主题数量
+    concurrency: 1 # 迁移作业的并行量，必须是2的幂
+  lock:
+    acquire-lock-timeout: 3 # 加锁阻塞时间，默认3秒
+    expire-lock-timeout: 20 # 加锁过期时间，默认20秒，过期时间比poll时间长，避免锁提前过期释放
