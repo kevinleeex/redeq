@@ -35,6 +35,7 @@ public class Redeq implements RedeqClient {
     private final RedeqConfig redeqConfig;
     private final ExecutorService executorService;
     private final RedissonClient redissonClient;
+    private final RedeqTimer redeqTimer;
 
     /**
      * constructor for RedeqClient, configured redisson client and Redeq config is required.
@@ -51,6 +52,8 @@ public class Redeq implements RedeqClient {
                 TimeUnit.SECONDS,
                 new SynchronousQueue<>(true));
         this.redeqService = new RedeqServiceImpl(redissonClient, redeqConfig);
+        this.redeqTimer = RedeqTimer.getTimer();
+        this.redeqTimer.init(this.redissonClient, this.redeqConfig);
         registerExecutorShutdownProcess();
     }
 
@@ -97,7 +100,8 @@ public class Redeq implements RedeqClient {
         check(consumeService);
 
         registerConsumerShutdownProcess(consumeService);
-        RedeqTimer.startTransfer(this.redissonClient, this.redeqConfig);
+
+        redeqTimer.startTransfer();
         if (topicCnt.getAndIncrement() < redeqConfig.getMaxTopics()) {
             log.info("[ReDeQ Client] consumer service for topic {} started.", topics);
             executorService.execute(() -> {
@@ -131,7 +135,6 @@ public class Redeq implements RedeqClient {
      *
      * @param consumeService - User defined consumer service.
      */
-    @SuppressWarnings("InfiniteLoopStatement")
     private void process(AbstractConsumeService consumeService) {
         Thread.currentThread().setName(consumeService.getTopics().toString());
         while (consumeService.getStatus() == StatusEnum.RUNNING) {
@@ -168,7 +171,7 @@ public class Redeq implements RedeqClient {
     /**
      * Execute this when retry
      * if retry times&lt;0, job will be removed and invoke <code>onFailed</code> method,
-     * else update jobId of the job and put the new job into DelayedBucket, the old one
+     * else update jobId of the job and put the new job into BucketQueue, the old one
      * should be removed if the new is added successfully.
      *
      * @param consumeService - User defined consumer service

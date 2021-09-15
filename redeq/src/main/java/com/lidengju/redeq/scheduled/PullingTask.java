@@ -34,9 +34,12 @@ public class PullingTask extends TimerTask {
 
     private final RedeqConfig redeqConfig;
 
-    public PullingTask(RedissonClient redissonClient, RedeqConfig redeqConfig) {
+    private final int routeId;
+
+    public PullingTask(RedissonClient redissonClient, RedeqConfig redeqConfig, int routeId) {
         this.redissonClient = redissonClient;
         this.redeqConfig = redeqConfig;
+        this.routeId = routeId;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class PullingTask extends TimerTask {
     public void pulling() {
         log.debug("Start pulling the job from Bucket Queue to Ready Queue...");
 
-        RLock lock = redissonClient.getLock(redeqConfig.getPrefix() + RedeqConstants.PULLING_JOB_LOCK);
+        RLock lock = redissonClient.getLock(redeqConfig.getPrefix() + RedeqConstants.PULLING_JOB_LOCK + routeId);
         try {
             boolean lockFlag = lock.tryLock(redeqConfig.getAcquireLockTimeout(), redeqConfig.getExpireLockTimeout(), TimeUnit.SECONDS);
             if (!lockFlag) {

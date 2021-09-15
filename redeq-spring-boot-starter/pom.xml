@@ -5,12 +5,12 @@
     <parent>
         <artifactId>redeq-parent</artifactId>
         <groupId>com.lidengju</groupId>
-        <version>1.0.0-ALPHA</version>
+        <version>1.1.0-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>redeq-spring-boot-starter</artifactId>
-    <version>1.0.0-ALPHA</version>
+    <version>1.1.0-ALPHA</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.lidengju</groupId>
             <artifactId>redeq</artifactId>
-            <version>1.0.0-ALPHA</version>
+            <version>${redeq.version}</version>
             <scope>compile</scope>
         </dependency>
 

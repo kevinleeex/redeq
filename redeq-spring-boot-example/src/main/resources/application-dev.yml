@@ -5,3 +5,4 @@ redeq:
   app:
     verbose: true
     max-topics: 3
+    concurrency: 3

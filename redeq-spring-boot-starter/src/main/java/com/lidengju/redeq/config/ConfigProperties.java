@@ -47,6 +47,7 @@ public class ConfigProperties {
         redeqConfig.setMaxTopics(this.app.maxTopics);
         redeqConfig.setSchedule(this.app.schedule);
         redeqConfig.setPollQueueTimeout(this.app.pollQueueTimeout);
+        redeqConfig.setConcurrency(this.app.concurrency);
         redeqConfig.setAcquireLockTimeout(this.lock.acquireLockTimeout);
         redeqConfig.setExpireLockTimeout(this.lock.expireLockTimeout);
         return redeqConfig;
@@ -87,6 +88,11 @@ public class ConfigProperties {
          * schedule period for transferring default 5 seconds, reduce this for real-time improving
          */
         private long schedule = 5L;
+        /**
+         * the number of threads for topical job transferring and consuming concurrently.
+         * set this parameter according to number of your instances, default 1.
+         */
+        private int concurrency = 1;
 
         public String getPrefix() {
             return prefix;
@@ -150,6 +156,14 @@ public class ConfigProperties {
 
         public void setMaxTopics(int maxTopics) {
             this.maxTopics = maxTopics;
+        }
+
+        public int getConcurrency() {
+            return concurrency;
+        }
+
+        public void setConcurrency(int concurrency) {
+            this.concurrency = concurrency;
         }
     }
 

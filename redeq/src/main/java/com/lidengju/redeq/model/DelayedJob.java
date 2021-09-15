@@ -28,7 +28,7 @@ public class DelayedJob implements Serializable {
     /**
      * route id, calculated by hashCode(srcId) % concurrency
      */
-    private int routeId = -1;
+    private int routeId = 0;
     /**
      * message for logging
      */

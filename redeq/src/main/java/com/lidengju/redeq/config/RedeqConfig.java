@@ -57,8 +57,9 @@ public class RedeqConfig {
 
     /**
      * the number of threads for topical job transferring and consuming concurrently.
+     * set this parameter according to number of your instances, default 1.
      */
-    private int concurrency = 3;
+    private int concurrency = 1;
 
     /**
      * get the expire time, it must be greater than the poll time, in case the lock won't be leased in advance.
@@ -146,10 +147,12 @@ public class RedeqConfig {
     }
 
     public int getConcurrency() {
-        return concurrency;
+        return Math.max(1, concurrency);
     }
 
     public void setConcurrency(int concurrency) {
-        this.concurrency = concurrency;
+        // get the closest power of 2 according given number
+        concurrency = Math.max(1, concurrency);
+        this.concurrency = (int) Math.pow(2, Math.floor(Math.log(concurrency)/Math.log(2)));
     }
 }

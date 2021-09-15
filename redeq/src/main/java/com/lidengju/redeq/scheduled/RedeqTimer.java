@@ -19,41 +19,54 @@ import java.util.concurrent.TimeUnit;
 public class RedeqTimer {
 
     private static final Logger log = LoggerFactory.getLogger(RedeqTimer.class);
-
-    private static final ScheduledExecutorService scheduledExecutorService;
+    private static final RedeqTimer redeqTimer = new RedeqTimer();
     /**
      * scheduler running flag
      */
     private static boolean isRunning = false;
-
-    static {
-        scheduledExecutorService = Executors.newScheduledThreadPool(2);
-    }
+    private ScheduledExecutorService scheduledExecutorService = null;
+    private RedissonClient redissonClient;
+    private RedeqConfig redeqConfig;
 
     private RedeqTimer() {
 
     }
 
+    public static RedeqTimer getTimer() {
+        return redeqTimer;
+    }
+
+    public void init(RedissonClient redissonClient, RedeqConfig config) {
+        this.redissonClient = redissonClient;
+        this.redeqConfig = config;
+        scheduledExecutorService = Executors.newScheduledThreadPool(config.getConcurrency());
+    }
+
     /**
      * start scheduling thread for transferring delayed job from Bucket Queue to Ready Queue
      */
-    public static synchronized void startTransfer(RedissonClient redissonClient, RedeqConfig config) {
-        // make sure one instance runs only one pulling scheduler
+    public synchronized void startTransfer() {
+        if (redissonClient == null || redeqConfig == null) {
+            log.error("[ReDeQ] RedeqTimer is not initialized!");
+        }
+        // make sure one instance runs only concurrency pulling scheduler
         if (!isRunning) {
             registerShutdownProcess();
-            scheduledExecutorService.scheduleAtFixedRate(new PullingTask(redissonClient, config),
-                    0, config.getSchedule(), TimeUnit.SECONDS);
+            for (int i = 0; i < redeqConfig.getConcurrency(); i++) {
+                scheduledExecutorService.scheduleAtFixedRate(new PullingTask(redissonClient, redeqConfig, i),
+                        0, redeqConfig.getSchedule(), TimeUnit.SECONDS);
+            }
             isRunning = true;
-            log.info("[ReDeQ] Job transferring started! Action will be executed every {} seconds.", config.getSchedule());
+            log.info("[ReDeQ] Job transferring started with concurrency of {}! Action will be executed every {} seconds.", redeqConfig.getConcurrency(), redeqConfig.getSchedule());
         }
     }
 
-    private static void registerShutdownProcess() {
+    private void registerShutdownProcess() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 scheduledExecutorService.shutdown();
                 log.warn("[ReDeQ] Job transferring will shutdown soon!");
-                if (!scheduledExecutorService.awaitTermination(2, TimeUnit.SECONDS)) {
+                if (!scheduledExecutorService.awaitTermination(10, TimeUnit.SECONDS)) {
                     log.warn("[ReDeQ] Job transferring did not shutdown gracefully within "
                             + "20 seconds. Proceeding will forceful shutdown");
                 }

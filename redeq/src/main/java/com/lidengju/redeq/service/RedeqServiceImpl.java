@@ -62,6 +62,9 @@ public class RedeqServiceImpl implements RedeqService {
                 job.setNextExecTimestamp(job.getCreateTimestamp() + job.getDelay() * 1000);
             }
 
+            // create route id
+            job.setRouteId( redeqConfig.getConcurrency());
+
             // create batch execution
             String topicId = job.getTopicId();
             RMap<String, DelayedJob> jobPool = redissonClient.getMap(redeqConfig.getPrefix() + RedeqConstants.JOB_POOL_KEY_PRE);
