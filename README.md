@@ -1,6 +1,8 @@
 # ReDeQ - Redis Delayed Queue
 
-> 作者：Li, Dengju，字数：2064，预计花费时间：10分钟
+另一个基于Redis的延迟队列
+
+> 作者：Li, Dengju，字数：2606，预计花费时间：15分钟
 
 [TOC]
 
@@ -83,7 +85,7 @@ redeq:
     schedule: 5 # 扫描延迟队列时间，默认5秒，减少提高实时性
     poll-queue-timeout: 5 # 默认从桶队列迁移作业到就绪队列的等待时间，默认5秒
     max-pool: 500000 # 作业池的最大容量，超过将抛出JOB_POOL_EXCEEDED异常，默认50万
-    max-topics: 10 # 最多允许消费的作业数量
+    max-topics: 10 # 最多允许消费的主题数量
     concurrency: 1 # 迁移作业的并行量，必须是2的幂
   lock:
     acquire-lock-timeout: 3 # 加锁阻塞时间，默认3秒
@@ -286,16 +288,20 @@ B -->[*]
 
 ## FAQ
 
-1. 作业如何并行消费？
+1. 如何多实例部署？
+
+   > ReDeQ依赖Redisson实现的分布式锁进行资源控制，有关redis的运行模式由Redisson进行管理。
+
+2. 作业如何并行消费？
 
    > 为作业设置不同的Topic，根据实例数增加ReDeQ的`concurrency`数值，作业会根据其jobId，通过hash并对`concurrency`取模后，得到`[0, concurrency)`的下标`n`，其会被路由到`prefix`+`REDEQ:BUCKET`+`n`对应的队列中；注意，此数值减小后，若原本的Bucket Queue还有作业未被消费，则其可能不会被消费，应考虑在重新部署应用手动将原Bucket Queue中的作业迁移到现在的首个队列，如`REDEQ:BUCKET0`中。
 
-2. 作业是怎么被路由的？
+3. 作业如何被路由？
 
    > `DelayedJob`的`srcId`属性（其值等于初始的`jobId`），通过如下哈希取模得到路由下标：
    >
    > ```java
-   > // 1. 取正数值
+   > // 1. 取绝对值
    > // 2. 通过&与位运算替代取模%，前提是modBy满足(2^n - 1)
    > routeId = (srcId.hashCode() & Integer.MAX_VALUE) & (modBy-1);
    > // 3. 为使modBy满足条件，因此在设置modBy即concurrency的值时，获取其最接近的2的幂
@@ -304,7 +310,13 @@ B -->[*]
    > concurrency = (int) Math.pow(2, Math.floor(Math.log(concurrency)/Math.log(2)));
    > ```
 
-3. 
+4. 为什么重试作业需要重命名作业ID？
+
+   > 在**添加**和**删除**作业时，会使用单个作业的`jobId`添加可重入锁，不同作业添加的过程不会产生冲突；但当执行**迁移**操作时，其是对整个迁移过程加锁，本质是执行往**就绪队列**增加和从**桶队列**删除的操作，这个过程不是原子事务执行的，其中可能会有其他指令插入，若不重命名，在根据key删除时，可能会将此key误删除；同理，若插入相同jobId作业，也有可能造成此问题。
+   >
+   > 若根据score(即时间戳)对**桶队列**进行删除，则要注意由于不同实例的时钟偏移或时间延迟造成误删除。
+   >
+   > 注意，redis的`zset`数据结构根据**score**删除的时间复杂度为`O(log(N) + M)`，而根据**value**删除的时间复杂度是`O(M * log(N))` M是删除的个数。
 
 ## References
 
