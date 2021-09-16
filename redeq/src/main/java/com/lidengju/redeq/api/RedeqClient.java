@@ -23,6 +23,15 @@ public interface RedeqClient {
     int add(DelayedJob job);
 
     /**
+     * Add a delayed job to Job Pool and Bucket Queue
+     *
+     * @param job - DelayedJob
+     * @param cover - if cover the job with duplicated jobId
+     * @return 1 if add succeed, 0 if failed
+     */
+    int add(DelayedJob job, boolean cover);
+
+    /**
      * Remove a delayed job from Job Pool and Bucket Queue
      *
      * @param job - DelayedJob

@@ -94,6 +94,7 @@ public class RedeqServiceImpl implements RedeqService {
         return 0;
     }
 
+    @Override
     public int addJob(DelayedJob job) {
         return addJob(job, true);
     }

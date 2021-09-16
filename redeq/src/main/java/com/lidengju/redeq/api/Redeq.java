@@ -66,8 +66,12 @@ public class Redeq implements RedeqClient {
 
     @Override
     public int add(DelayedJob job) {
+        return add(job, true);
+    }
+
+    public int add(DelayedJob job, boolean cover){
         log.info("[ReDeQ Client] add a job[topicId: {}] to JobPool.", job.getTopicId());
-        return redeqService.addJob(job);
+        return redeqService.addJob(job, cover);
     }
 
     @Override
@@ -133,6 +137,7 @@ public class Redeq implements RedeqClient {
 
     /**
      * check if configuration is all set
+     * @param consumeService Your consumer service
      */
     private void check(AbstractConsumeService consumeService) {
         if (consumeService.getTopics() == null || consumeService.getTopics().isEmpty()) {
