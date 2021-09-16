@@ -1,5 +1,6 @@
 package com.lidengju.redeq.api;
 
+import com.lidengju.redeq.config.RedeqConfig;
 import com.lidengju.redeq.model.DelayedJob;
 import com.lidengju.redeq.service.AbstractConsumeService;
 
@@ -52,4 +53,11 @@ public interface RedeqClient {
      * @param consumeService - DelayedJobConsumer service
      */
     void subscribe(String topic, AbstractConsumeService consumeService);
+
+    /**
+     * Allows to get config loaded.
+     *
+     * @return RedeqConfig
+     */
+    RedeqConfig getRedeqConfig();
 }

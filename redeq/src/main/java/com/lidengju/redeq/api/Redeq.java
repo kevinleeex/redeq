@@ -122,6 +122,16 @@ public class Redeq implements RedeqClient {
     }
 
     /**
+     * Allows to get config loaded.
+     *
+     * @return RedeqConfig
+     */
+    @Override
+    public RedeqConfig getRedeqConfig() {
+        return this.redeqConfig;
+    }
+
+    /**
      * check if configuration is all set
      */
     private void check(AbstractConsumeService consumeService) {
