@@ -14,7 +14,25 @@
 
 > 作者：Li, Dengju，字数：2606，预计花费时间：15分钟
 
-[TOC]
+- [ReDeQ - Yet Another Redis Delayed Queue](#redeq---yet-another-redis-delayed-queue)
+   * [Overview](#overview)
+   * [Implementation](#implementation)
+   * [Features](#features)
+   * [Installation](#installation)
+   * [Usage](#usage)
+      + [with spring-boot](#with-spring-boot)
+         - [Dependency](#dependency)
+         - [Config](#config)
+         - [Example](#example)
+      + [without spring-boot](#without-spring-boot)
+   * [Design](#design)
+      + [Service Diagram](#service-diagram)
+      + [ReDeQ-Design](#redeq-design)
+      + [Components](#components)
+      + [State Diagram](#state-diagram)
+   * [FAQ](#faq)
+   * [References](#references)
+   * [License](#license)
 
 ## Overview
 
@@ -74,7 +92,7 @@ See `redeq-spring-boot-example` example project.
 <dependency>
     <groupId>com.lidengju</groupId>
     <artifactId>redeq-spring-boot-starter</artifactId>
-    <version>1.0.0-ALPHA</version>
+    <version>1.1.0-ALPHA</version>
 </dependency>
 ```
 
