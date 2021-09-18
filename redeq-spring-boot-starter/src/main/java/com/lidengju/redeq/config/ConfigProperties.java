@@ -16,8 +16,14 @@ import static com.lidengju.redeq.config.ConfigProperties.PREFIX;
 public class ConfigProperties {
     public static final String PREFIX = "redeq";
 
+    /**
+     * Nested Configuration for App
+     */
     @NestedConfigurationProperty
     private App app = new App();
+    /**
+     * Nested Configuration for Lock
+     */
     @NestedConfigurationProperty
     private Lock lock = new Lock();
 
@@ -53,6 +59,9 @@ public class ConfigProperties {
         return redeqConfig;
     }
 
+    /**
+     * Config properties about App
+     */
     public static class App {
         /**
          * prefix of redeq
@@ -167,6 +176,9 @@ public class ConfigProperties {
         }
     }
 
+    /**
+     * Config properties about Lock.
+     */
     public static class Lock {
         /**
          * timeout of acquiring lock, default 3 seconds
