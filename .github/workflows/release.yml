@@ -15,13 +15,21 @@ jobs:
           server-id: github
           distribution: 'adopt'
           java-version: '8'
+          gpg-private-key: ${{ secrets.GPG_SECRET }} # Value of the GPG private key to import
+          gpg-passphrase: ${{ secrets.GPG_PASSWORD }} # env variable for GPG private key passphrase
+
+
+      - id: install-secret-key
+        name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.GPG_SECRET }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
       - name: Publish to GitHub Packages Apache Maven
-
-        run: mvn deploy -P release -Dgithub=true -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }} \
+        run: mvn deploy -P release -Dgithub=true -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKEN is the default env for the password
 
@@ -30,11 +38,14 @@ jobs:
         with: # running setup-java again overwrites the settings.xml
           distribution: 'adopt'
           java-version: '8'
-          server-id: maven # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: ${{ secrets.OSSRH_USERNAME }} # env variable for username in deploy
-          server-password: ${{ secrets.OSSRH_PASSWORD }} # env variable for token in deploy
+          server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_PASSWORD # env variable for token in deploy
           gpg-private-key: ${{ secrets.GPG_SECRET }} # Value of the GPG private key to import
           gpg-passphrase: ${{ secrets.GPG_PASSWORD }} # env variable for GPG private key passphrase
 
       - name: Publish to Apache Maven Central
         run: mvn deploy -P release -Dmaven=true -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }}
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

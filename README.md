@@ -1,11 +1,11 @@
 <div align="center"><img style="display:inline-block" width='800' src="./assets/redeq-logo.png"/><p>
-    <span style="font-size: 14px">Version: 1.1.0-ALPHA</span><br>
+    <span style="font-size: 14px">Version: 1.1.1-ALPHA</span><br>
     <span>"ReDeQ - 另一个基于Redis的延迟队列"</span><br>
     <span style="font-size: 12px;color= #95dafc">-- Created by <a>Kevin T. Lee</a> --</span>
     </p>
    <a href="./License"><img alt="MIT" src="https://img.shields.io/badge/LICENSE%20-MIT-green.svg?longCache=true&style=for-the-badge"></a>
         <!--<a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Love-red.svg?longCache=true&style=for-the-badge"></a>-->
-    <a href="https://github.com/kevinleeex/redeq"><img alt="Version" src="https://img.shields.io/badge/Version-1.1.0_ALPHA-blue.svg?longCache=true&style=for-the-badge"></a>
+    <a href="https://github.com/kevinleeex/redeq"><img alt="Version" src="https://img.shields.io/badge/Version-1.1.1_ALPHA-blue.svg?longCache=true&style=for-the-badge"></a>
 </div>
 
 # ReDeQ - Yet Another Redis Delayed Queue
@@ -92,7 +92,7 @@ See `redeq-spring-boot-example` example project.
 <dependency>
     <groupId>com.lidengju</groupId>
     <artifactId>redeq-spring-boot-starter</artifactId>
-    <version>1.1.0-ALPHA</version>
+    <version>1.1.1-ALPHA</version>
 </dependency>
 ```
 
@@ -113,7 +113,7 @@ redeq:
     schedule: 5 # 扫描延迟队列时间，默认5秒，减少提高实时性
     poll-queue-timeout: 5 # 默认从桶队列迁移作业到就绪队列的等待时间，默认5秒
     max-pool: 500000 # 作业池的最大容量，超过将抛出JOB_POOL_EXCEEDED异常，默认50万
-    max-topics: 10 # 最多允许消费的主题数量
+    max-subscribers: 10 # 最多允许订阅的数量
     concurrency: 1 # 迁移作业的并行量，必须是2的幂
   lock:
     acquire-lock-timeout: 3 # 加锁阻塞时间，默认3秒

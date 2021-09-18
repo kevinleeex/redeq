@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.lidengju</groupId>
             <artifactId>redeq-spring-boot-starter</artifactId>
-            <version>1.1.0-ALPHA</version>
+            <version>1.1.1-ALPHA</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->

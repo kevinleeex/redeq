@@ -51,6 +51,7 @@ public class ConfigProperties {
         redeqConfig.setRetry(this.app.retry);
         redeqConfig.setMaxPool(this.app.maxPool);
         redeqConfig.setMaxTopics(this.app.maxTopics);
+        redeqConfig.setMaxSubscribers(this.app.maxSubscribers);
         redeqConfig.setSchedule(this.app.schedule);
         redeqConfig.setPollQueueTimeout(this.app.pollQueueTimeout);
         redeqConfig.setConcurrency(this.app.concurrency);
@@ -88,7 +89,12 @@ public class ConfigProperties {
         /**
          * the maximum size of topical consuming threads
          */
+        @Deprecated
         private int maxTopics = 10;
+        /**
+         * the number of topic subscribers
+         */
+        private int maxSubscribers = 10;
         /**
          * if display the operation log
          */
@@ -159,11 +165,14 @@ public class ConfigProperties {
             this.schedule = schedule;
         }
 
+        @Deprecated
         public int getMaxTopics() {
             return maxTopics;
         }
 
+        @Deprecated
         public void setMaxTopics(int maxTopics) {
+            this.maxSubscribers = maxTopics;
             this.maxTopics = maxTopics;
         }
 
@@ -173,6 +182,14 @@ public class ConfigProperties {
 
         public void setConcurrency(int concurrency) {
             this.concurrency = concurrency;
+        }
+
+        public int getMaxSubscribers() {
+            return maxSubscribers;
+        }
+
+        public void setMaxSubscribers(int maxSubscribers) {
+            this.maxSubscribers = maxSubscribers;
         }
     }
 

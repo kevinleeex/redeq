@@ -43,7 +43,13 @@ public class RedeqConfig {
     /**
      * the number of topic consuming thread
      */
+    @Deprecated
     private int maxTopics = 10;
+
+    /**
+     * the number of topic subscribers
+     */
+    private int maxSubscribers = 10;
 
     /**
      * if display the operation log
@@ -138,11 +144,14 @@ public class RedeqConfig {
         this.schedule = schedule;
     }
 
+    @Deprecated
     public int getMaxTopics() {
         return maxTopics;
     }
 
+    @Deprecated
     public void setMaxTopics(int maxTopics) {
+        this.maxSubscribers = maxTopics;
         this.maxTopics = maxTopics;
     }
 
@@ -154,5 +163,13 @@ public class RedeqConfig {
         // get the closest power of 2 according given number
         concurrency = Math.max(1, concurrency);
         this.concurrency = (int) Math.pow(2, Math.floor(Math.log(concurrency) / Math.log(2)));
+    }
+
+    public int getMaxSubscribers() {
+        return maxSubscribers;
+    }
+
+    public void setMaxSubscribers(int maxSubscribers) {
+        this.maxSubscribers = maxSubscribers;
     }
 }

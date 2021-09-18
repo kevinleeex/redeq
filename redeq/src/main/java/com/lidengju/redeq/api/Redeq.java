@@ -47,7 +47,7 @@ public class Redeq implements RedeqClient {
         this.redeqConfig = redeqConfig;
         this.redissonClient = redissonClient;
         this.executorService = new ThreadPoolExecutor(2,
-                redeqConfig.getMaxTopics() * 2,
+                redeqConfig.getMaxSubscribers() * 2,
                 redeqConfig.getSchedule(),
                 TimeUnit.SECONDS,
                 new SynchronousQueue<>(true));
@@ -106,7 +106,7 @@ public class Redeq implements RedeqClient {
         registerConsumerShutdownProcess(consumeService);
 
         redeqTimer.startTransfer();
-        if (topicCnt.getAndIncrement() < redeqConfig.getMaxTopics()) {
+        if (topicCnt.getAndIncrement() < redeqConfig.getMaxSubscribers()) {
             log.info("[ReDeQ Client] consumer service for topic {} started.", topics);
             executorService.execute(() -> {
                 consumeService.setStatus(StatusEnum.RUNNING);
