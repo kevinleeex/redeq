@@ -348,7 +348,7 @@ B -->[*]
 
 ## References
 
-- [Redisson参考手册](h t tp://bookstack.cn/read.redisson-wiki-zh)
+- [Redisson参考手册](http://bookstack.cn/read.redisson-wiki-zh)
 - [有赞延迟队列](http://tech.youzan.com/queuing_delay)
 
 ## License
