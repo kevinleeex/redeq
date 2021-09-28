@@ -34,7 +34,7 @@ class RedeqTest extends BaseTest {
     @BeforeEach
     void setUp() {
         RedeqConfig redeqConfig = new RedeqConfig();
-        redeqConfig.setMaxTopics(1);
+        redeqConfig.setMaxSubscribers(1);
         redeq = new Redeq(redissonClient, redeqConfig);
     }
 
@@ -43,7 +43,7 @@ class RedeqTest extends BaseTest {
         // Record
         new Expectations() {
             {
-                redeqService.addJob((DelayedJob) any);
+                redeqService.addJob((DelayedJob) any, true);
                 result = 0;
             }
         };
@@ -59,7 +59,7 @@ class RedeqTest extends BaseTest {
         // Record
         new Expectations() {
             {
-                redeqService.addJob((DelayedJob) any);
+                redeqService.addJob((DelayedJob) any, true);
                 result = 1;
             }
         };
