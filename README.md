@@ -4,11 +4,14 @@
     <span style="font-size: 12px;color= #95dafc">-- Created by <a>Kevin T. Lee</a> --</span>
     </p>
    <a href="./License"><img alt="MIT" src="https://img.shields.io/badge/LICENSE%20-MIT-green.svg?longCache=true&style=for-the-badge"></a>
-        <!--<a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Love-red.svg?longCache=true&style=for-the-badge"></a>-->
-    <a href="https://github.com/kevinleeex/redeq"><img alt="Version" src="https://img.shields.io/badge/Version-1.1.1_ALPHA-blue.svg?longCache=true&style=for-the-badge"></a>
+   <a href="http://lidengju.com"><img alt="Code" src="https://img.shields.io/badge/Code%20with-Heart-red.svg?longCache=true&style=for-the-badge"></a>
+   <a href="https://github.com/kevinleeex/redeq"><img alt="Version" src="https://img.shields.io/badge/Version-1.1.1_ALPHA-blue.svg?longCache=true&style=for-the-badge"></a>
+   
 </div>
 
 # ReDeQ - Yet Another Redis Delayed Queue
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kevinleeex_redeq&metric=alert_status)](https://sonarcloud.io/dashboard?id=kevinleeex_redeq)
 
 另一个基于Redis的延迟队列
 
