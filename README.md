@@ -200,13 +200,13 @@ public class TestConsumer {
                     log.info("正在消费[{}]", job.getTopicId());
                     Model model = (JsonToModel) job.getBody();
                     try{
-        							firstProc(model);
+        		firstProc(model);
                   	} catch(RedeqException e){
                       log.info("first proc failed!");
                       // 返回false重试
                       return false;
                   	}
-    								sencondProc();
+    			sencondProc(model);
                     return true;
                 }
                 
@@ -333,7 +333,7 @@ B -->[*]
    >
    > ```java
    > // 1. 取绝对值
-   > // 2. 通过&与位运算替代取模%，前提是modBy满足(2^n - 1)
+   > // 2. 通过&与位运算替代取模%，前提是modBy满足(2^n)
    > routeId = (srcId.hashCode() & Integer.MAX_VALUE) & (modBy-1);
    > // 3. 为使modBy满足条件，因此在设置modBy即concurrency的值时，获取其最接近的2的幂
    > // get the closest power of 2 according given number
