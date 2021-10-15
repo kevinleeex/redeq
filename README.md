@@ -114,7 +114,7 @@ redeq:
     delay: 60 # 默认任务延迟时间，单位秒，默认60秒
     retry: 3 # 默认重试次数，默认3次
     schedule: 5 # 扫描延迟队列时间，默认5秒，减少提高实时性
-    poll-queue-timeout: 5 # 默认从桶队列迁移作业到就绪队列的等待时间，默认5秒
+    poll-queue-timeout: 5 # 从就绪队列获取任务的阻塞等待时间，默认5秒
     max-pool: 500000 # 作业池的最大容量，超过将抛出JOB_POOL_EXCEEDED异常，默认50万
     max-subscribers: 10 # 最多允许订阅的数量
     concurrency: 1 # 迁移作业的并行量，必须是2的幂
