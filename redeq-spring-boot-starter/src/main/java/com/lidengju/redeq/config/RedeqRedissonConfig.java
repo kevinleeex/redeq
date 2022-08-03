@@ -36,7 +36,7 @@ public class RedeqRedissonConfig {
         String[] hostArray = Arrays.stream(hosts.split(","))
                 .map(x -> "redis://" + x.trim())
                 .toArray(String[]::new);
-        config.useClusterServers().addNodeAddress(hostArray);
+        config.useClusterServers().addNodeAddress(hostArray).setPassword(password);
         log.info("Redis cluster nodes added: {}", Arrays.toString(hostArray));
         return Redisson.create(config);
     }
