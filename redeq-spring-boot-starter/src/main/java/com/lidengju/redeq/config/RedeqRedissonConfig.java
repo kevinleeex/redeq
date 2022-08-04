@@ -26,7 +26,7 @@ public class RedeqRedissonConfig {
 
     @Value("${redeq.redis.hosts}")
     private String hosts;
-    @Value("${redeq.redis.password:}")
+    @Value("${redeq.redis.password:#{null}}")
     private String password;
 
     @Bean
